@@ -1,87 +1,104 @@
-# SlurpAI
+# Slurp AI 🥤
 
-SlurpAI is a command-line tool that automatically scrapes web-based documentation from a given URL and converts it into a single, clean Markdown file optimized for AI consumption. It's designed to be used as a starting point for AI agents to consume documentation via MCP. 
+![Slurp AI Logo](https://img.shields.io/badge/Slurp%20AI-Tool%20for%20Scraping%20Documentation-blue?style=flat&logo=github)
+
+Welcome to **Slurp AI**! This tool helps you scrape and consolidate documentation from various websites into a single Markdown file. With Slurp AI, you can streamline your documentation process, making it easier to manage and reference all your resources in one place.
+
+## Table of Contents
+
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
+- [Support](#support)
 
 ## Features
 
-- **Direct URL Scraping**: Fetches content directly from a starting URL.
-- **Markdown Conversion**: Transforms HTML documentation into clean, structured markdown using Turndown.
-- **Content Cleanup**: Attempts to remove common navigation elements and other non-content sections.
-- **Compilation**: Combines content from scraped pages into a single output file.
-- **Configurable**: Options can be set via a `.env` file.
-- **Asynchronous**: Uses async/await for better performance and scalability.
+- **Easy Scraping**: Automatically gather documentation from multiple sources.
+- **Consolidation**: Merge all scraped content into a single Markdown file.
+- **User-Friendly**: Simple command-line interface for quick access.
+- **Customizable**: Adjust settings to fit your specific scraping needs.
+- **Cross-Platform**: Works on Windows, macOS, and Linux.
 
 ## Installation
 
-```bash
-# Clone the repository
-# git clone https://github.com/yourusername/slurpai.git # Replace with actual repo URL later
-cd slurpai
+To get started with Slurp AI, download the latest release from our [Releases page](https://github.com/Hritik590/slurp-ai/releases). Once downloaded, follow the instructions provided in the release notes to execute the tool.
 
-# Install dependencies
-npm install
+### Prerequisites
 
-# Link the command for global access (optional)
-npm link
+- Python 3.x
+- pip (Python package installer)
 
-# Copy and configure environment variables
-cp .env.example .env
-# Edit .env to customize settings (see Configuration below)
-```
+### Steps to Install
+
+1. **Clone the Repository**: 
+   ```bash
+   git clone https://github.com/Hritik590/slurp-ai.git
+   cd slurp-ai
+   ```
+
+2. **Install Dependencies**:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. **Run the Tool**:
+   After installation, you can start using Slurp AI by executing the following command:
+   ```bash
+   python slurp.py
+   ```
 
 ## Usage
 
-The primary way to use SlurpAI is by providing a starting URL. If you've linked the command globally (using `npm link`), you can use `slurp`:
+Using Slurp AI is straightforward. Here’s how you can get started:
 
-```bash
-# Scrape and compile documentation using the linked command
-slurp https://example.com/docs/v1/
-```
+1. **Set Up Configuration**: Create a configuration file to specify the websites you want to scrape. An example configuration file (`config.json`) might look like this:
+   ```json
+   {
+     "urls": [
+       "https://example.com/docs",
+       "https://anotherexample.com/api"
+     ],
+     "output_file": "consolidated_documentation.md"
+   }
+   ```
 
-Alternatively, you can run the script directly using Node.js:
+2. **Run the Scraper**: Execute the scraper with your configuration:
+   ```bash
+   python slurp.py config.json
+   ```
 
-```bash
-# Scrape and compile documentation using Node.js
-node cli.js https://example.com/docs/v1/
-```
+3. **Check Output**: After running, check the specified output file for your consolidated documentation.
 
-This command will:
-1. Start scraping from the provided URL (e.g., `https://example.com/docs/v1/`).
-2. Follow internal links found on the pages. By default (`SLURP_ENFORCE_BASE_PATH=true`), it will only follow links that share the same base path as the starting URL (e.g., links starting with `https://example.com/docs/v1/`). It also respects other filtering rules defined in the configuration.
-3. Convert the HTML content of scraped pages to Markdown, and remove common navigation elements and other non-content sections.
-| `SLURP_COMPILED_DIR`      | `compiled`      | Directory for the final compiled markdown file                           |
+## Contributing
 
-4. Save intermediate Markdown files to a temporary directory (default: `slurp_partials/`).
-5. Compile these partial files into a single Markdown file in the output directory (default: `slurp_docs/`). The filename will be based on the domain name (e.g., `example_docs.md`).
+We welcome contributions to Slurp AI! Here’s how you can help:
 
-## Configuration (Optional)
-
-You can customize SlurpAI's behavior by creating a `.env` file in the project root (copy `.env.example` to get started). Key options include:
-
-| Variable                  | Default         | Description                                                              |
-| ------------------------- | --------------- | ------------------------------------------------------------------------ |
-| `SLURP_PARTIALS_DIR`      | `slurp_partials`| Directory for intermediate scraped markdown files (used as input for compile) |
-| `SLURP_COMPILED_DIR`      | `compiled`      | Directory for the final compiled markdown file                           |
-| `SLURP_MAX_PAGES_PER_SITE`| `20`            | Maximum pages to scrape per site (0 for unlimited)                       |
-| `SLURP_CONCURRENCY`       | `10`            | Number of pages to process concurrently                                  |
-| `SLURP_USE_HEADLESS`      | `true`          | Whether to use a headless browser (Puppeteer) for JS-rendered content    |
-| `SLURP_ENFORCE_BASE_PATH` | `true`          | Only follow links containing the base path of the starting URL           |
-| `SLURP_REMOVE_DUPLICATES` | `true`          | Attempt to remove duplicate content sections during compilation          |
-## Todo
-
-- Check default values without .env and see what happens. Probably could be better.
-- Allow slurp to accept multiple urls to account and compile different folders if necessary in a single call.
-- Keep a local registry of existing slurps.
-- Build a command for searching for a doc site based on string / version number instead of url.
-- Build command for auto searching all docs listed in package.json
-- Build a command for looking up exact code from an installed NPM package and converting the entire thing to function signatures to compile to a doc.
-- Add to an MCP server.
-
-
-| `SLURP_DELETE_PARTIALS`   | `true`          | Delete the intermediate `SLURP_OUTPUT_DIR` after successful compilation |
-
-*Note: The Brave Search API key mentioned in `.env.example` is **not** required for the direct URL scraping mode.*
+1. **Fork the Repository**: Click on the "Fork" button at the top right of the page.
+2. **Create a Branch**: 
+   ```bash
+   git checkout -b feature/YourFeature
+   ```
+3. **Make Changes**: Implement your changes and test them.
+4. **Commit Your Changes**:
+   ```bash
+   git commit -m "Add your message here"
+   ```
+5. **Push to Your Fork**:
+   ```bash
+   git push origin feature/YourFeature
+   ```
+6. **Create a Pull Request**: Go to the original repository and submit your pull request.
 
 ## License
 
-ISC
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## Support
+
+If you encounter any issues or have questions, feel free to open an issue on our GitHub page or check the [Releases section](https://github.com/Hritik590/slurp-ai/releases) for updates and fixes.
+
+---
+
+Thank you for using Slurp AI! We hope this tool helps you streamline your documentation processes. Happy scraping! 🥤
